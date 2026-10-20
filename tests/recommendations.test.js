@@ -1,0 +1,16 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict'),M=require('../frontend/model'),{evaluateCandidate,rankCandidates}=require('../backend/recommendations');
+function fixture(){const s=M.blank();s.staff=[{id:'a',name:'Alex Fiction',status:'Active'},{id:'b',name:'Blake Fiction',status:'Active'}];s.qualifications=s.staff.map(p=>({staffId:p.id,name:'Lifeguard',expiry:'2040-01-01'}));s.availability=s.staff.map(p=>({staffId:p.id,start:'2035-01-01T00:00',end:'2035-02-01T00:00',type:'Available'}));return s;}
+const slot={id:'gap',start:'2035-01-09T12:00',end:'2035-01-09T16:00',location:'Main Pool',requirements:'Lifeguard'};
+test('fit scores derive from recorded workload and explicit preferences, with deterministic ranks',()=>{const s=fixture();s.shifts=[{id:'before',staffId:'b',start:'2035-01-08T08:00',end:'2035-01-08T16:00',location:'Main Pool'}];const rows=rankCandidates(s.staff.map(p=>evaluateCandidate(s,p,slot)));assert.deepEqual(rows.map(r=>r.staffId),['a','b']);assert.deepEqual(rows.map(r=>r.matchScore),[100,86]);assert.deepEqual(rows.map(r=>r.rank),[1,2]);assert.equal(rows[1].scheduledHours,8);assert.equal(rows[1].nearestRestHours,20);assert.equal(rows[1].checks.every(c=>c.passed),true);const constrained=evaluateCandidate(s,s.staff[0],slot,{locations:'Other pool',weeklyHours:2});assert.equal(constrained.eligible,true);assert.equal(constrained.matchScore,70);assert.match(constrained.scoreExplanation,/2h preferred/);assert.match(constrained.scoreExplanation,/40h scoring reference/);});
+test('every mandatory exclusion has no fit score and cannot outrank an eligible candidate',()=>{for(const [label,change,pattern]of [
+  ['inactive',s=>s.staff[0].status='Inactive',/inactive/],
+  ['expiry',s=>s.qualifications[0].expiry='2035-01-08',/certifications/],
+  ['unavailable',s=>s.availability.push({staffId:'a',start:slot.start,end:slot.end,type:'Unavailable'}),/unavailable/],
+  ['no confirmed availability',s=>s.availability=s.availability.filter(a=>a.staffId!=='a'),/availability/],
+  ['overlap',s=>s.shifts.push({id:'other',staffId:'a',start:slot.start,end:slot.end,location:'Other'}),/Conflicting/],
+  ['rest',s=>{s.schedulingPolicy={minRestHours:8,maxWeeklyHours:0,eligibility:[]};s.shifts.push({id:'early',staffId:'a',start:'2035-01-09T05:00',end:'2035-01-09T08:00',location:'Main Pool'});},/rest period/],
+  ['hours',s=>s.schedulingPolicy={minRestHours:0,maxWeeklyHours:2,eligibility:[]},/weekly hour/],
+  ['area',s=>s.schedulingPolicy={minRestHours:0,maxWeeklyHours:0,eligibility:[{staffId:'a',locations:'Other pool'}]},/coverage area/]
+]){const s=fixture();change(s);const result=evaluateCandidate(s,s.staff[0],slot);assert.equal(result.eligible,false,label);assert.equal(result.matchScore,null,label);assert.match(result.explanation,pattern,label);assert.equal(result.checks.some(c=>!c.passed),true,label);const ranked=rankCandidates([result,{...evaluateCandidate(fixture(),fixture().staff[1],slot)}]);assert.equal(ranked[0].staffId,'b');assert.equal(ranked[1].rank,null);}});
+test('ended periods never receive eligible recommendations',()=>{const s=fixture();const r=evaluateCandidate(s,s.staff[0],{...slot,start:'2020-01-01T12:00',end:'2020-01-01T16:00'});assert.equal(r.eligible,false);assert.equal(r.matchScore,null);assert.match(r.explanation,/period has ended/);});

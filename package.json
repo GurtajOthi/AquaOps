@@ -1,0 +1,18 @@
+{
+  "name": "aquaops",
+  "version": "0.4.0",
+  "private": true,
+  "engines": {
+    "node": ">=24.14.0 <25"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "demo": "node tools/demo.cjs start",
+    "demo:reset": "node tools/demo.cjs reset",
+    "test": "node --test tests/*.test.js",
+    "test:browser": "node tests/browser.cjs && node tests/browser-access.cjs && node tests/browser-portal.cjs && node tests/browser-chemistry.cjs && node tests/browser-recommendations.cjs && node tests/browser-calendar.cjs && node tests/browser-polish.cjs",
+    "test:scale": "node tests/scale.cjs",
+    "backup": "node tools/storage.cjs backup",
+    "demo:presentation": "node tools/demo.cjs start --presentation"
+  }
+}

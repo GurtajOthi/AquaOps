@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AquaOps Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ==================================
+         TOP NAVIGATION
+    ================================== -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">+</div>
+
+            <div>
+                <h1>AquaOps</h1>
+                <p>Inspections. Compliance. Staffing.</p>
+            </div>
+
+        </div>
+
+        <nav class="nav-links">
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Tasks</a>
+            <a href="#">Reports</a>
+            <a href="#">Documents</a>
+            <a href="#">Inventory</a>
+        </nav>
+
+        <div class="topbar-right">
+
+            <div class="notif">1</div>
+            <div class="notif">2</div>
+
+            <div class="profile">
+                <div class="avatar">G</div>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==================================
+         MAIN DASHBOARD GRID
+    ================================== -->
+
+    <main class="dashboard-grid">
+
+
+        <!-- ==============================
+             CARD 1: STAFF ROSTER
+        ============================== -->
+
+        <section class="card">
+
+            <div class="card-header">
+
+                <h2>
+                    <i data-lucide="users"></i>
+                    Staff Roster
+                </h2>
+
+                <span class="muted">3 On Duty</span>
+
+            </div>
+
+            <div class="badge red">
+                LIVE NOW: 3 On Duty
+            </div>
+
+            <div class="staff-list">
+
+                <div class="staff-item">
+
+                    <div class="staff-info">
+
+                        <div class="staff-avatar">M</div>
+
+                        <div>
+                            <h3>Mike R.</h3>
+                            <p>9:00 AM – 4:00 PM</p>
+                        </div>
+
+                    </div>
+
+                    <span class="pill green">ON DUTY</span>
+
+                </div>
+
+
+                <div class="staff-item">
+
+                    <div class="staff-info">
+
+                        <div class="staff-avatar">S</div>
+
+                        <div>
+                            <h3>Samantha P.</h3>
+                            <p>8:30 AM – 5:00 PM</p>
+                        </div>
+
+                    </div>
+
+                    <span class="pill green">ON DUTY</span>
+
+                </div>
+
+
+                <div class="staff-item">
+
+                    <div class="staff-info">
+
+                        <div class="staff-avatar">J</div>
+
+                        <div>
+                            <h3>James L.</h3>
+                            <p>10:00 AM – 2:00 PM</p>
+                        </div>
+
+                    </div>
+
+                    <span class="pill orange">
+                        DUE 10:15 AM
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Coverage Map -->
+
+            <div class="mini-block">
+
+                <h3>Coverage Map</h3>
+
+                <div class="calendar-box">
+
+                    <div class="calendar-row">
+
+                        <span>M</span>
+                        <span>T</span>
+                        <span>W</span>
+                        <span>T</span>
+                        <span>F</span>
+
+                    </div>
+
+                    <div class="bars">
+
+                        <div class="bar red-bar"></div>
+                        <div class="bar blue-bar"></div>
+                        <div class="bar green-bar"></div>
+                        <div class="bar yellow-bar"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==============================
+             CARD 2: MAINTENANCE SCHEDULE
+        ============================== -->
+
+        <section class="card">
+
+            <div class="card-header">
+
+                <h2>
+                    <i data-lucide="wrench"></i>
+                    Maintenance Schedule
+                </h2>
+
+            </div>
+
+
+            <!-- Maintenance Manager -->
+
+            <div class="sub-card">
+
+                <div class="sub-title blue-title">
+                    UPCOMING TASKS
+                </div>
+
+                <!-- JavaScript creates tasks here -->
+
+                <div id="maintenance-list"></div>
+
+
+                <!-- Add Task Form -->
+
+                <div class="add-task">
+
+                    <input
+                        type="text"
+                        id="new-task"
+                        placeholder="Enter new maintenance task"
+                    >
+
+                    <button id="add-task-btn">
+                        + Add Task
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Recent Photo -->
+
+            <div class="mini-block">
+
+                <h3>Recent Photo</h3>
+
+                <div class="photo-placeholder">
+                    Facility equipment photo
+                </div>
+
+                <div class="photo-footer">
+
+                    <span>Filter Prep - Sep 18</span>
+
+                    <button>
+                        Upload Progress Photo
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==============================
+             CARD 3: POOL STATUS
+        ============================== -->
+
+        <section class="card">
+
+            <div class="card-header">
+
+                <h2>
+                    <i data-lucide="waves"></i>
+                    Pool Status
+                </h2>
+
+            </div>
+
+
+            <p class="status-text">
+
+                <span class="open-text">Open</span>
+
+                • Inspector Compliant
+
+            </p>
+
+
+            <!-- Water Chemistry -->
+
+            <div class="water-panel">
+
+                <div class="water-item">
+
+                    <span>Chlorine</span>
+
+                    <strong>2.5 ppm</strong>
+
+                </div>
+
+
+                <div class="water-item">
+
+                    <span>pH</span>
+
+                    <strong>7.4</strong>
+
+                </div>
+
+
+                <div class="water-item">
+
+                    <span>Water Temperature</span>
+
+                    <strong>29°C / 84°F</strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Equipment Status -->
+
+            <div class="status-list">
+
+                <div class="status-row">
+
+                    <span>Pumps</span>
+
+                    <span class="green-text">
+                        Running
+                    </span>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span>Heater</span>
+
+                    <span class="orange-text">
+                        Normal
+                    </span>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span>Chemicals</span>
+
+                    <span class="green-text">
+                        Stocked
+                    </span>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span>First Aid Kit</span>
+
+                    <span class="red-text">
+                        READY
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ==================================
+         FACILITY LOGS
+    ================================== -->
+
+    <section class="card table-card">
+
+        <div class="card-header">
+
+            <h2>Facility Logs</h2>
+
+            <span class="muted">
+                Today, Sep 20
+            </span>
+
+        </div>
+
+
+        <!-- Log Tabs -->
+
+        <div class="tab-row">
+
+            <span class="tab active-tab">
+                Chemistry Log
+            </span>
+
+            <span class="tab">
+                Safety & Checks
+            </span>
+
+            <span class="tab">
+                Incidents (1)
+            </span>
+
+        </div>
+
+
+        <!-- Chemistry Table -->
+        
+<!-- Chemistry Reading Form -->
+
+<div class="chemistry-form">
+
+    <h3>
+        <i data-lucide="flask-conical"></i>
+        Record New Chemistry Reading
+    </h3>
+
+    <div class="chemistry-inputs">
+
+        <div class="input-group">
+            <label for="chlorine">Free Chlorine (ppm)</label>
+            <input
+                type="number"
+                id="chlorine"
+                placeholder="2.5"
+                min="0"
+                step="0.1"
+            >
+        </div>
+
+        <div class="input-group">
+            <label for="ph">pH Level</label>
+            <input
+                type="number"
+                id="ph"
+                placeholder="7.4"
+                min="0"
+                max="14"
+                step="0.1"
+            >
+        </div>
+
+        <div class="input-group">
+            <label for="temperature">Temperature (°C)</label>
+            <input
+                type="number"
+                id="temperature"
+                placeholder="29"
+                step="0.1"
+            >
+        </div>
+
+        <div class="input-group">
+            <label for="alkalinity">Alkalinity (ppm)</label>
+            <input
+                type="number"
+                id="alkalinity"
+                placeholder="90"
+                min="0"
+                step="1"
+            >
+        </div>
+
+    </div>
+
+    <div class="input-group">
+
+        <label for="chemistry-notes">Notes</label>
+
+        <input
+            type="text"
+            id="chemistry-notes"
+            placeholder="Opening checks, maintenance, observations..."
+        >
+
+    </div>
+
+    <button id="save-chemistry">
+        + Save Chemistry Reading
+    </button>
+
+</div>
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Time</th>
+                        <th>Free Cl</th>
+                        <th>pH</th>
+                        <th>Temp</th>
+                        <th>Alkalinity</th>
+                        <th>Notes & Drills</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="chemistry-table-body">
+
+                    <tr>
+
+                        <td>9:00 AM</td>
+                        <td>2.5</td>
+                        <td>7.4</td>
+                        <td>84°F</td>
+                        <td>90 ppm</td>
+                        <td>Opening checks</td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>12:00 PM</td>
+                        <td>2.7</td>
+                        <td>7.3</td>
+                        <td>84°F</td>
+                        <td>85 ppm</td>
+                        <td>First aid drill</td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>3:00 PM</td>
+                        <td>2.6</td>
+                        <td>7.4</td>
+                        <td>83°F</td>
+                        <td>88 ppm</td>
+                        <td>Equipment inspection</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<!-- ==================================
+     JAVASCRIPT
+================================== -->
+
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
+<script>
+
+    if (typeof lucide !== "undefined") {
+        lucide.createIcons();
+    }
+
+</script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
